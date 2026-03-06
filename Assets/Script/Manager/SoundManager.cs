@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource _sfxSource;
     [SerializeField] private List<SoundData> soundList;
+    [SerializeField] private AudioClip backGroundMusic;
 
     private void Awake()
     {
@@ -29,12 +30,18 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
             _sfxSource = GetComponent<AudioSource>();
+            _sfxSource.clip = backGroundMusic;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        PlaySound();
     }
 
     public void PlaySfx(SoundType soundType)

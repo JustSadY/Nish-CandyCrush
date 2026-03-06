@@ -30,6 +30,7 @@ public class GridBoard : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
+        if (SettingsManager.Instance.IsGamePaused()) return;
         if (_bIsProcessingMove || Camera.main == null || Mouse.current == null) return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
