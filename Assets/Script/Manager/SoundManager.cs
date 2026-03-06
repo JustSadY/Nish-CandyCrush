@@ -15,11 +15,12 @@ public struct SoundData
     [Range(0f, 1f)] public float volume;
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
 
-    [SerializeField] private AudioSource sfxSource;
+    private AudioSource _sfxSource;
     [SerializeField] private List<SoundData> soundList;
 
     private void Awake()
@@ -27,6 +28,7 @@ public class SoundManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            _sfxSource = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -35,13 +37,23 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(SoundType soundType)
+    public void PlaySfx(SoundType soundType)
     {
         SoundData data = soundList.Find(s => s.type == soundType);
 
         if (data.clip != null)
         {
-            sfxSource.PlayOneShot(data.clip, data.volume);
+            _sfxSource.PlayOneShot(data.clip, data.volume);
         }
+    }
+
+    public void PlaySound()
+    {
+        _sfxSource.Play();
+    }
+
+    public void StopSound()
+    {
+        _sfxSource.Stop();
     }
 }

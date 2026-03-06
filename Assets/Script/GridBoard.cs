@@ -91,6 +91,7 @@ public class GridBoard : MonoBehaviour
 
     private void HandleSelection(Crush clickedCrush)
     {
+        SoundManager.Instance.PlaySfx(SoundType.ClickEffect);
         if (_selectedCrush == null)
         {
             _selectedCrush = clickedCrush;
@@ -245,6 +246,7 @@ public class GridBoard : MonoBehaviour
                     {
                         _grid[x, y] = null;
                         Destroy(crush.gameObject);
+                        SoundManager.Instance.PlaySfx(SoundType.Crushes);
                     }
                 }
             }
